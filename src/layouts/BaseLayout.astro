@@ -6,14 +6,10 @@ import Footer from '../components/Footer.astro';
 export interface Props {
   title: string;
   description?: string;
-  showBanner?: boolean;
-  tagline?: string;
 }
 const {
   title,
   description = 'Articles and resources on web and software development, leadership, and strategy.',
-  showBanner = true,
-  tagline = 'Author, Project Leader, Coach, Agile Consultant',
 } = Astro.props;
 const fullTitle = title.includes('PJ Srivastava') ? title : `${title} — PJ Srivastava`;
 ---
@@ -32,12 +28,8 @@ const fullTitle = title.includes('PJ Srivastava') ? title : `${title} — PJ Sri
 </head>
 <body id="top">
   <Header />
-  {showBanner && (
-    <div class="site-banner">
-      <p class="tagline">{tagline}</p>
-    </div>
-  )}
-  <main class="max-w-page mx-auto px-6 py-10">
+  <slot name="hero" />
+  <main class="max-w-page mx-auto px-6 py-12 md:py-16">
     <slot />
   </main>
   <Footer />

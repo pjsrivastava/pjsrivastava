@@ -15,6 +15,7 @@ interface Props {
 }
 const { post } = Astro.props;
 const { Content } = await post.render();
+
 const dateStr = post.data.pubDate
   ? post.data.pubDate.toLocaleDateString('en-US', {
       year: 'numeric',
@@ -22,29 +23,40 @@ const dateStr = post.data.pubDate
       day: 'numeric',
     })
   : '';
+
+// Very rough reading-time estimate (200 wpm).
+const wordCount = post.body.split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 ---
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="max-w-prose mx-auto">
-    <header class="mb-8">
+    <header class="mb-10 pb-8 border-b border-rule">
       {post.data.topic && (
-        <p class="text-xs tracking-widest uppercase text-muted mb-2">
-          {post.data.topic}
+        <p class="article-eyebrow">{post.data.topic}</p>
+      )}
+      <h1 class="article-title">{post.data.title}</h1>
+      {post.data.description && (
+        <p class="mt-5 text-lg md:text-xl text-inkMute leading-relaxed italic font-serif">
+          {post.data.description}
         </p>
       )}
-      <h1 class="font-serif text-3xl md:text-4xl leading-tight mb-2">
-        {post.data.title}
-      </h1>
-      {dateStr && <p class="text-sm text-muted">{dateStr}</p>}
+      <div class="article-meta">
+        {dateStr && <span>{dateStr}</span>}
+        {dateStr && <span class="dot" aria-hidden="true"></span>}
+        <span>{readingMinutes} min read</span>
+      </div>
     </header>
 
     <div class="prose">
       <Content />
     </div>
 
-    <nav class="mt-16 pt-8 border-t border-rule text-sm">
-      <a href="/" style="border-bottom: none;" class="text-accent hover:text-accent-hover">
-        ← Back to all articles
+    <nav class="mt-20 pt-8 border-t border-rule flex items-center justify-between text-sm">
+      <a href="/" class="nav-link flex items-center gap-2">
+        <span aria-hidden="true">←</span>
+        All articles
       </a>
+      <a href="#top" class="nav-link">Back to top</a>
     </nav>
   </article>
 </BaseLayout>

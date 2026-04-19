@@ -3,76 +3,140 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('blog');
-const byTopic = new Map<string, { title: string; slug: string }[]>();
+
+interface ArticleEntry {
+  title: string;
+  description?: string;
+  pubDate?: Date;
+  href: string;
+}
+
+const byTopic = new Map<string, ArticleEntry[]>();
 for (const post of allPosts) {
   const topic = post.data.topic ?? 'Articles';
   const arr = byTopic.get(topic) ?? [];
-  arr.push({ title: post.data.title, slug: post.slug });
+  arr.push({
+    title: post.data.title,
+    description: post.data.description,
+    pubDate: post.data.pubDate,
+    href: `/blog/${post.slug}`,
+  });
   byTopic.set(topic, arr);
 }
 
-// Preserve intentional topic order from the original site
-const topicOrder = [
-  'Project Management Principles',
-  'Transitioning to / Understanding Agile',
-  'For Leaders and Stakeholders',
-  'Project Management Nuts and Bolts',
-  'Short Topics',
-];
-const orderedTopics = [
-  ...topicOrder.filter((t) => byTopic.has(t)),
-  ...[...byTopic.keys()].filter((t) => !topicOrder.includes(t)),
+// Two articles existed on the original homepage that aren't in the saved
+// export — keep them as external links for now.
+byTopic.set('Project Management Principles', [
+  {
+    title: 'A Short Guide to Writing Software Requirements',
+    href: 'https://www.pjsrivastava.com/a-short-guide-to-writing-software-requirements',
+    description: 'A pragmatic approach to capturing what a software project needs to do.',
+  },
+  {
+    title: 'A Short Guide to Estimating Software Projects',
+    href: 'https://www.pjsrivastava.com/a-short-guide-to-estimating-software-projects',
+    description: 'Why software estimates go wrong, and how to make them less wrong.',
+  },
+  ...(byTopic.get('Project Management Principles') ?? []),
+]);
+
+// Topic order + short editorial blurbs
+const topicOrder: { name: string; blurb: string }[] = [
+  {
+    name: 'Project Management Principles',
+    blurb: 'Foundational ideas for leading projects well — the why behind the how.',
+  },
+  {
+    name: 'Transitioning to / Understanding Agile',
+    blurb: "Adopting Agile in the real world, where teams aren't textbook and clients don't follow scripts.",
+  },
+  {
+    name: 'For Leaders and Stakeholders',
+    blurb: 'For executives and decision-makers buying or sponsoring software work.',
+  },
+  {
+    name: 'Project Management Nuts and Bolts',
+    blurb: 'Practical tactics, templates, and checklists for day-to-day project work.',
+  },
+  {
+    name: 'Short Topics',
+    blurb: 'Quick reads and lessons drawn from a couple of decades in the trenches.',
+  },
 ];
 
-// Also keep the original "external" references that were on the site but never
-// had full article files saved — they remain as links to the live Squarespace URLs.
-const externalByTopic: Record<string, { title: string; href: string }[]> = {
-  'Project Management Principles': [
-    {
-      title: 'A Short Guide to Writing Software Requirements',
-      href: 'https://www.pjsrivastava.com/a-short-guide-to-writing-software-requirements',
-    },
-    {
-      title: 'A Short Guide to Estimating Software Projects',
-      href: 'https://www.pjsrivastava.com/a-short-guide-to-estimating-software-projects',
-    },
-  ],
-};
+const orderedTopics = [
+  ...topicOrder.filter((t) => byTopic.has(t.name)),
+  ...[...byTopic.keys()]
+    .filter((t) => !topicOrder.some((o) => o.name === t))
+    .map((name) => ({ name, blurb: '' })),
+];
+
+function formatDate(d?: Date) {
+  if (!d) return '';
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  });
+}
 ---
 <BaseLayout
   title="PJ Srivastava"
   description="Articles and resources on web and software development, leadership, and strategy."
 >
-  <article class="max-w-prose mx-auto">
-    <h1 class="font-serif text-3xl md:text-4xl mb-6 leading-tight">
-      Thoughts on Project/Product/Program Leadership and Agile
-    </h1>
-    <div class="prose">
-      <p>
-        Is succeeding at web and software development projects important to you? Me too.
-        I've spent most of my career (spanning nearly two decades) working on getting them
-        done, getting them done on-time and on-budget, and getting them done in a way so
-        that stakeholders, clients, and my development team are all happy. I've learned a
-        lot along the way!
-      </p>
-      <p>
-        Below are articles I've written based on what has worked for me, in the hope that
-        they will help others achieve positive outcomes for their own projects. I have
-        grouped them by topic:
+  <section slot="hero" class="site-hero">
+    <div class="max-w-hero mx-auto px-6 text-center">
+      <p class="eyebrow">Author · Project Leader · Coach · Agile Consultant</p>
+      <h1 class="font-serif text-display-lg mt-4 text-ink">
+        Thoughts on Project, Product &amp; Program Leadership
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-inkMute max-w-2xl mx-auto leading-relaxed">
+        Two decades of notes from the trenches of web and software projects —
+        what works, what doesn't, and how to keep your team, clients, and stakeholders
+        all happy at the same time.
       </p>
     </div>
+  </section>
+
+  <article class="max-w-3xl mx-auto">
+    <p class="text-inkMute text-lg leading-relaxed">
+      Is succeeding at web and software development projects important to you? Me too. I've
+      spent most of my career — spanning nearly two decades — working on getting them done,
+      getting them done on-time and on-budget, and getting them done in a way so that
+      stakeholders, clients, and my development team are all happy. I've learned a lot
+      along the way!
+    </p>
+    <p class="text-inkMute text-lg leading-relaxed mt-4">
+      Below are articles I've written based on what has worked for me, in the hope that
+      they'll help others achieve positive outcomes for their own projects. They're grouped
+      by topic.
+    </p>
+
+    <div class="ornament" aria-hidden="true">§</div>
 
     {orderedTopics.map((topic) => (
-      <section>
-        <h2 class="topic-heading">{topic}</h2>
-        <ul class="topic-list">
-          {(externalByTopic[topic] ?? []).map((ext) => (
-            <li><a href={ext.href} rel="noopener">{ext.title}</a></li>
+      <section class="topic-block">
+        <header>
+          <h2 class="topic-heading">{topic.name}</h2>
+          {topic.blurb && <p class="topic-blurb">{topic.blurb}</p>}
+        </header>
+        <div class="mt-6">
+          {(byTopic.get(topic.name) ?? []).map((a) => (
+            <a href={a.href} class="article-entry"
+               target={a.href.startsWith('http') ? '_blank' : undefined}
+               rel={a.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              <h3>
+                {a.title}
+                <span class="article-arrow text-muted" aria-hidden="true">→</span>
+              </h3>
+              {(a.pubDate || a.description) && (
+                <p class="meta">
+                  {a.pubDate ? formatDate(a.pubDate) : 'Published on pjsrivastava.com'}
+                </p>
+              )}
+              {a.description && <p class="excerpt">{a.description}</p>}
+            </a>
           ))}
-          {(byTopic.get(topic) ?? []).map((p) => (
-            <li><a href={`/blog/${p.slug}`}>{p.title}</a></li>
-          ))}
-        </ul>
+        </div>
       </section>
     ))}
   </article>

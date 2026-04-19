@@ -3,7 +3,7 @@ const { pathname } = Astro.url;
 const links = [
   { href: '/', label: 'Home' },
   { href: '/clients', label: 'Clients' },
-  { href: '/about-me', label: 'About Me' },
+  { href: '/about-me', label: 'About' },
 ];
 function isActive(href: string) {
   if (href === '/') return pathname === '/';
@@ -11,18 +11,17 @@ function isActive(href: string) {
 }
 ---
 <header class="site-header">
-  <div class="max-w-page mx-auto px-6 py-4 flex flex-col items-center gap-3 md:flex-row md:justify-between">
-    <h1 class="font-serif text-2xl md:text-3xl">
-      <a href="/" class="text-ink no-underline" style="border-bottom: none;">PJ Srivastava</a>
-    </h1>
+  <div class="max-w-page mx-auto px-6 py-5 flex items-center justify-between gap-8">
+    <a href="/" class="site-title-mark text-xl md:text-[1.35rem]">
+      PJ Srivastava
+    </a>
     <nav aria-label="Primary">
-      <ul class="flex items-center gap-8">
+      <ul class="flex items-center gap-7 md:gap-9">
         {links.map((l) => (
           <li>
             <a
               href={l.href}
               class={`nav-link ${isActive(l.href) ? 'active' : ''}`}
-              style="border-bottom: none;"
             >
               {l.label}
             </a>

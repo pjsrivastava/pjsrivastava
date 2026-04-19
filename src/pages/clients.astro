@@ -23,7 +23,7 @@ const clients: ClientSection[] = [
     sampleWork: [
       'Custom integration between Salesforce CRM and Sitecore CMS for 28 multi-lingual websites localized for different countries.',
       'Developed custom newsletter application with article previews, categorization, intelligent search, and social sharing functionality.',
-      'Developed secure javascript form embeddable in third-party websites for lead generation.',
+      'Developed secure JavaScript form embeddable in third-party websites for lead generation.',
       'Developed interactive wizard for selecting appropriate card product based on user-answered questions.',
       'Implementation of detailed site analytics and campaign tracking.',
     ],
@@ -44,7 +44,7 @@ const clients: ClientSection[] = [
       'Repaired an incomplete site migration into Adobe Experience Manager CMS and rebuilt its connection to a legacy SQL Server database using .NET web services.',
       'Designed new customer web portal to track articles read and suggest new articles to read.',
       'Developed application for tracking diabetes indicators, medication, and doctor visits, and suggesting a personalized wellness plan.',
-      'Developed HIPAA-compliant registration forms for collection patient and caregiver information, as well as medication information.',
+      'Developed HIPAA-compliant registration forms for collecting patient and caregiver information, as well as medication information.',
     ],
   },
   {
@@ -70,9 +70,9 @@ const clients: ClientSection[] = [
   {
     name: 'Golden1 Credit Union (short-term contract)',
     sampleWork: [
-      'Rebuild, redesign and functional enhancement of legacy site using Sitecore CMS.',
+      'Rebuild, redesign, and functional enhancement of legacy site using Sitecore CMS.',
       'Retool of front-end technologies to implement responsive design and ADA compliance.',
-      'Third party API integration with external CRM for sending and querying data.',
+      'Third-party API integration with external CRM for sending and querying data.',
       'Development of custom event calendar and registration system.',
       'Enhancement of location finder to include geolocation, filtering, and smart search.',
     ],
@@ -82,7 +82,7 @@ const clients: ClientSection[] = [
     sampleWork: [
       'Implementation of advanced site personalization and A/B testing features using Adobe Marketing Cloud technologies.',
       'Automation of production workflows for generating new product pages.',
-      'Enhanced site search with granular keyword targeting, relevancy weighting, suggested search, results list previews, and advanced analytics.',
+      'Enhanced site search with granular keyword targeting, relevancy weighting, suggested search, results-list previews, and advanced analytics.',
     ],
   },
   {
@@ -91,21 +91,21 @@ const clients: ClientSection[] = [
       'Prior to working with large companies, I spent several years consulting for startups and local businesses. Despite their smaller size, some of them had the most interesting, varied, and innovative projects to work on!',
     ],
     sampleWork: [
-      'Web Portals/Dashboards',
-      'Server Migrations/Hosting setup',
-      'CMS Implementations',
-      'CRM Implementations',
-      'Ecommerce Implementations',
-      'ERP Implementations',
-      'SaaS Development',
-      'Product Configurators',
-      'Mobile Applications',
-      'Kiosk Software',
-      'Email Marketing',
-      'A/B Testing',
-      'Workflow Automation',
-      'Custom APIs/Web Services',
-      'Interactive Media',
+      'Web portals / dashboards',
+      'Server migrations / hosting setup',
+      'CMS implementations',
+      'CRM implementations',
+      'E-commerce implementations',
+      'ERP implementations',
+      'SaaS development',
+      'Product configurators',
+      'Mobile applications',
+      'Kiosk software',
+      'Email marketing',
+      'A/B testing',
+      'Workflow automation',
+      'Custom APIs / web services',
+      'Interactive media',
     ],
   },
 ];
@@ -114,34 +114,48 @@ const clients: ClientSection[] = [
   title="Clients"
   description="A sample of the client projects PJ Srivastava has worked on across a career in digital agencies and SaaS."
 >
-  <article class="max-w-prose mx-auto prose">
-    <h1>A Sample of the Client Projects I've Worked On</h1>
-    <p>
-      My in-the-trenches experience includes being a consultant for three different
-      digital agencies and one SaaS startup over a 16 year period, as well as having been
-      a former software developer, UX designer, and product manager.
-    </p>
-    <p>Below are some of the companies and types of projects I've managed:</p>
+  <article class="max-w-prose mx-auto">
+    <header class="mb-10 pb-8 border-b border-rule">
+      <p class="article-eyebrow">Experience</p>
+      <h1 class="article-title">A Sample of the Client Projects I've Worked On</h1>
+      <p class="mt-5 text-lg md:text-xl text-inkMute leading-relaxed italic font-serif">
+        Sixteen years across three digital agencies and one SaaS startup — plus earlier
+        stints as a developer, UX designer, and product manager.
+      </p>
+    </header>
+
+    <div class="prose">
+      <p>
+        My in-the-trenches experience includes being a consultant for three different
+        digital agencies and one SaaS startup over a 16-year period, as well as having
+        been a former software developer, UX designer, and product manager.
+      </p>
+      <p>Below are some of the companies and types of projects I've managed.</p>
+    </div>
 
     {clients.map((c) => (
-      <section>
-        <h2>{c.name}</h2>
-        {c.overviewBullets && c.overviewBullets.length > 0 && (
-          <>
-            {c.sampleWork && <h3>Overview:</h3>}
-            <ul>
-              {c.overviewBullets.map((b) => <li>{b}</li>)}
-            </ul>
-          </>
-        )}
-        {c.sampleWork && c.sampleWork.length > 0 && (
-          <>
-            <h3>Sample Project Work:</h3>
-            <ul>
-              {c.sampleWork.map((b) => <li>{b}</li>)}
-            </ul>
-          </>
-        )}
+      <section class="mt-14 pt-10 border-t border-rule">
+        <h2 class="font-serif text-2xl md:text-3xl leading-tight text-ink" style="font-weight: 500; letter-spacing: -0.01em;">
+          {c.name}
+        </h2>
+        <div class="prose mt-5">
+          {c.overviewBullets && c.overviewBullets.length > 0 && (
+            <>
+              {c.sampleWork && <h3>Overview</h3>}
+              <ul>
+                {c.overviewBullets.map((b) => <li>{b}</li>)}
+              </ul>
+            </>
+          )}
+          {c.sampleWork && c.sampleWork.length > 0 && (
+            <>
+              <h3>Sample project work</h3>
+              <ul>
+                {c.sampleWork.map((b) => <li>{b}</li>)}
+              </ul>
+            </>
+          )}
+        </div>
       </section>
     ))}
   </article>
