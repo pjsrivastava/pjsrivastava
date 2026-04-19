@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Serif display + clean sans body. Free stand-ins for Adobe Garamond Pro / Proxima Nova. */
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap");
 
 @layer base {
   html {
@@ -16,9 +16,14 @@
   }
   ::selection {
     background: rgba(15, 110, 110, 0.18);
-    color: theme('colors.ink');
+    color: theme("colors.ink");
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
     font-weight: 500;
   }
@@ -35,7 +40,7 @@
   /* ---------- Header ---------- */
   .site-header {
     @apply bg-paper/90 backdrop-blur-sm sticky top-0 z-20;
-    border-bottom: 1px solid theme('colors.rule');
+    border-bottom: 1px solid theme("colors.rule");
   }
   .site-title-mark {
     @apply font-serif text-ink no-underline;
@@ -56,13 +61,13 @@
     position: relative;
   }
   .nav-link.active::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     right: 0;
     bottom: -6px;
     height: 1px;
-    background: theme('colors.ink');
+    background: theme("colors.ink");
   }
 
   /* ---------- Hero (homepage only) ---------- */
@@ -70,16 +75,23 @@
     @apply relative overflow-hidden;
     padding-top: clamp(4rem, 10vw, 8rem);
     padding-bottom: clamp(3rem, 8vw, 6rem);
-    background:
-      radial-gradient(ellipse at 20% 0%, rgba(15,110,110,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 90% 100%, rgba(201,168,74,0.10) 0%, transparent 55%),
-      theme('colors.paper');
+    background: radial-gradient(
+        ellipse at 20% 0%,
+        rgba(15, 110, 110, 0.08) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse at 90% 100%,
+        rgba(201, 168, 74, 0.1) 0%,
+        transparent 55%
+      ),
+      theme("colors.paper");
   }
   .site-hero::after {
-    content: '';
+    content: "";
     @apply absolute inset-x-0 bottom-0;
     height: 1px;
-    background: theme('colors.rule');
+    background: theme("colors.rule");
   }
   .eyebrow {
     @apply uppercase tracking-eyebrow text-[0.72rem] font-medium text-accent;
@@ -98,7 +110,7 @@
     @apply text-inkMute mt-2 text-base;
   }
   .article-entry {
-    @apply group block py-5 border-b border-rule last:border-b-0;
+    @apply block py-5 border-b border-rule last:border-b-0;
     border-bottom-style: solid;
   }
   .article-entry h3 {
@@ -146,13 +158,17 @@
   }
   .ornament::before,
   .ornament::after {
-    content: '';
+    content: "";
     flex: 1;
     height: 1px;
-    background: theme('colors.rule');
+    background: theme("colors.rule");
   }
-  .ornament::before { margin-right: 1.25rem; }
-  .ornament::after { margin-left: 1.25rem; }
+  .ornament::before {
+    margin-right: 1.25rem;
+  }
+  .ornament::after {
+    margin-left: 1.25rem;
+  }
 
   /* ---------- Footer ---------- */
   .site-footer {
@@ -167,11 +183,11 @@
   .footer-icon {
     width: 1rem;
     height: 1rem;
-    color: theme('colors.muted');
+    color: theme("colors.muted");
     transition: color 150ms ease, transform 150ms ease;
     flex-shrink: 0;
   }
   .footer-link--icon:hover .footer-icon {
-    color: theme('colors.ink');
+    color: theme("colors.ink");
   }
 }
