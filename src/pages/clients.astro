@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface ClientSection {
+  name: string;
+  overviewBullets?: string[];
+  sampleWork?: string[];
+}
+
+const clients: ClientSection[] = [
+  {
+    name: 'Q Software Development LLC (dba Quarem)',
+    overviewBullets: [
+      'Led turn-around effort for SaaS startup challenged with product development issues and onboarding Fortune 500 and large client companies.',
+      'Recruited new development team, including a new Chief Technology Officer, and put Agile processes in place; improved release times from a few times a year to every three weeks.',
+      'Wrote documentation for and implemented organizational processes to successfully pass a SOC I Type I and Type II audit.',
+      'Process improvements and team-building led to a doubling of revenue within a one-year time span.',
+      'Successfully coached and mentored organization to be self-sustaining.',
+    ],
+  },
+  {
+    name: 'American Express (long-term contract)',
+    sampleWork: [
+      'Custom integration between Salesforce CRM and Sitecore CMS for 28 multi-lingual websites localized for different countries.',
+      'Developed custom newsletter application with article previews, categorization, intelligent search, and social sharing functionality.',
+      'Developed secure javascript form embeddable in third-party websites for lead generation.',
+      'Developed interactive wizard for selecting appropriate card product based on user-answered questions.',
+      'Implementation of detailed site analytics and campaign tracking.',
+    ],
+  },
+  {
+    name: 'TXU Energy (long-term contract)',
+    sampleWork: [
+      'Custom integration between enterprise SAP implementation and Sitecore CMS.',
+      'Developed My Energy Dashboard web portal for customers to monitor their electricity usage and billing details.',
+      'Developed interface and functionality for online bill payment and signing up for or changing plans online.',
+      'Developed custom plan finder with searching, filtering, and comparison features for users to find the right plan for their needs.',
+      'Developed iOS and Android applications with comparable desktop functionality.',
+    ],
+  },
+  {
+    name: 'Novo Nordisk (long-term contract)',
+    sampleWork: [
+      'Repaired an incomplete site migration into Adobe Experience Manager CMS and rebuilt its connection to a legacy SQL Server database using .NET web services.',
+      'Designed new customer web portal to track articles read and suggest new articles to read.',
+      'Developed application for tracking diabetes indicators, medication, and doctor visits, and suggesting a personalized wellness plan.',
+      'Developed HIPAA-compliant registration forms for collection patient and caregiver information, as well as medication information.',
+    ],
+  },
+  {
+    name: 'Horizon Therapeutics (long-term contract)',
+    sampleWork: [
+      'Migration, redesign, and enhancement of 15+ sites within CrownPeak CMS.',
+      'Program management of multiple website portfolios, email campaigns, and social media advertising.',
+      'Management of copywriting, design, UX, and medical/legal compliance processes for new site builds and existing site redesigns.',
+      'Developed application for self-assessment of medical symptoms and generating custom report to share with doctors for follow-up.',
+      'Trained team and stakeholders on development approach using a shared component library to increase the speed and decrease the cost of website maintenance and new development.',
+    ],
+  },
+  {
+    name: 'MRC Global (long-term contract)',
+    sampleWork: [
+      'Design and development of a single corporate website to consolidate 8+ smaller company websites, including new branding, content, functionality, and user experience.',
+      'Developed custom location finder with Google Maps API integration, zip-code, city, state, country, and keyword search, and autocomplete.',
+      'Developed custom site localization features to segment product and service offerings by three different regions and 16 different countries.',
+      'Developed custom product template with previews, image gallery, categorization, and dynamic content.',
+      'Developed custom online newsletter and blogging system for self-administration of online marketing campaigns.',
+    ],
+  },
+  {
+    name: 'Golden1 Credit Union (short-term contract)',
+    sampleWork: [
+      'Rebuild, redesign and functional enhancement of legacy site using Sitecore CMS.',
+      'Retool of front-end technologies to implement responsive design and ADA compliance.',
+      'Third party API integration with external CRM for sending and querying data.',
+      'Development of custom event calendar and registration system.',
+      'Enhancement of location finder to include geolocation, filtering, and smart search.',
+    ],
+  },
+  {
+    name: 'Orvis (short-term contract)',
+    sampleWork: [
+      'Implementation of advanced site personalization and A/B testing features using Adobe Marketing Cloud technologies.',
+      'Automation of production workflows for generating new product pages.',
+      'Enhanced site search with granular keyword targeting, relevancy weighting, suggested search, results list previews, and advanced analytics.',
+    ],
+  },
+  {
+    name: 'Assorted Small/Medium-Sized Companies (5 year period)',
+    overviewBullets: [
+      'Prior to working with large companies, I spent several years consulting for startups and local businesses. Despite their smaller size, some of them had the most interesting, varied, and innovative projects to work on!',
+    ],
+    sampleWork: [
+      'Web Portals/Dashboards',
+      'Server Migrations/Hosting setup',
+      'CMS Implementations',
+      'CRM Implementations',
+      'Ecommerce Implementations',
+      'ERP Implementations',
+      'SaaS Development',
+      'Product Configurators',
+      'Mobile Applications',
+      'Kiosk Software',
+      'Email Marketing',
+      'A/B Testing',
+      'Workflow Automation',
+      'Custom APIs/Web Services',
+      'Interactive Media',
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Clients"
+  description="A sample of the client projects PJ Srivastava has worked on across a career in digital agencies and SaaS."
+>
+  <article class="max-w-prose mx-auto prose">
+    <h1>A Sample of the Client Projects I've Worked On</h1>
+    <p>
+      My in-the-trenches experience includes being a consultant for three different
+      digital agencies and one SaaS startup over a 16 year period, as well as having been
+      a former software developer, UX designer, and product manager.
+    </p>
+    <p>Below are some of the companies and types of projects I've managed:</p>
+
+    {clients.map((c) => (
+      <section>
+        <h2>{c.name}</h2>
+        {c.overviewBullets && c.overviewBullets.length > 0 && (
+          <>
+            {c.sampleWork && <h3>Overview:</h3>}
+            <ul>
+              {c.overviewBullets.map((b) => <li>{b}</li>)}
+            </ul>
+          </>
+        )}
+        {c.sampleWork && c.sampleWork.length > 0 && (
+          <>
+            <h3>Sample Project Work:</h3>
+            <ul>
+              {c.sampleWork.map((b) => <li>{b}</li>)}
+            </ul>
+          </>
+        )}
+      </section>
+    ))}
+  </article>
+</BaseLayout>

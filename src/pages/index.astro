@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const byTopic = new Map<string, { title: string; slug: string }[]>();
+for (const post of allPosts) {
+  const topic = post.data.topic ?? 'Articles';
+  const arr = byTopic.get(topic) ?? [];
+  arr.push({ title: post.data.title, slug: post.slug });
+  byTopic.set(topic, arr);
+}
+
+// Preserve intentional topic order from the original site
+const topicOrder = [
+  'Project Management Principles',
+  'Transitioning to / Understanding Agile',
+  'For Leaders and Stakeholders',
+  'Project Management Nuts and Bolts',
+  'Short Topics',
+];
+const orderedTopics = [
+  ...topicOrder.filter((t) => byTopic.has(t)),
+  ...[...byTopic.keys()].filter((t) => !topicOrder.includes(t)),
+];
+
+// Also keep the original "external" references that were on the site but never
+// had full article files saved — they remain as links to the live Squarespace URLs.
+const externalByTopic: Record<string, { title: string; href: string }[]> = {
+  'Project Management Principles': [
+    {
+      title: 'A Short Guide to Writing Software Requirements',
+      href: 'https://www.pjsrivastava.com/a-short-guide-to-writing-software-requirements',
+    },
+    {
+      title: 'A Short Guide to Estimating Software Projects',
+      href: 'https://www.pjsrivastava.com/a-short-guide-to-estimating-software-projects',
+    },
+  ],
+};
+---
+<BaseLayout
+  title="PJ Srivastava"
+  description="Articles and resources on web and software development, leadership, and strategy."
+>
+  <article class="max-w-prose mx-auto">
+    <h1 class="font-serif text-3xl md:text-4xl mb-6 leading-tight">
+      Thoughts on Project/Product/Program Leadership and Agile
+    </h1>
+    <div class="prose">
+      <p>
+        Is succeeding at web and software development projects important to you? Me too.
+        I've spent most of my career (spanning nearly two decades) working on getting them
+        done, getting them done on-time and on-budget, and getting them done in a way so
+        that stakeholders, clients, and my development team are all happy. I've learned a
+        lot along the way!
+      </p>
+      <p>
+        Below are articles I've written based on what has worked for me, in the hope that
+        they will help others achieve positive outcomes for their own projects. I have
+        grouped them by topic:
+      </p>
+    </div>
+
+    {orderedTopics.map((topic) => (
+      <section>
+        <h2 class="topic-heading">{topic}</h2>
+        <ul class="topic-list">
+          {(externalByTopic[topic] ?? []).map((ext) => (
+            <li><a href={ext.href} rel="noopener">{ext.title}</a></li>
+          ))}
+          {(byTopic.get(topic) ?? []).map((p) => (
+            <li><a href={`/blog/${p.slug}`}>{p.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </article>
+</BaseLayout>

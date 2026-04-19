@@ -1,0 +1,34 @@
+---
+const { pathname } = Astro.url;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/clients', label: 'Clients' },
+  { href: '/about-me', label: 'About Me' },
+];
+function isActive(href: string) {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+---
+<header class="site-header">
+  <div class="max-w-page mx-auto px-6 py-4 flex flex-col items-center gap-3 md:flex-row md:justify-between">
+    <h1 class="font-serif text-2xl md:text-3xl">
+      <a href="/" class="text-ink no-underline" style="border-bottom: none;">PJ Srivastava</a>
+    </h1>
+    <nav aria-label="Primary">
+      <ul class="flex items-center gap-8">
+        {links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class={`nav-link ${isActive(l.href) ? 'active' : ''}`}
+              style="border-bottom: none;"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
