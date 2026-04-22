@@ -24,22 +24,6 @@ for (const post of allPosts) {
   byTopic.set(topic, arr);
 }
 
-// Two articles existed on the original homepage that aren't in the saved
-// export — keep them as external links for now.
-byTopic.set('Project Management Principles', [
-  {
-    title: 'A Short Guide to Writing Software Requirements',
-    href: 'https://www.pjsrivastava.com/a-short-guide-to-writing-software-requirements',
-    description: 'A pragmatic approach to capturing what a software project needs to do.',
-  },
-  {
-    title: 'A Short Guide to Estimating Software Projects',
-    href: 'https://www.pjsrivastava.com/a-short-guide-to-estimating-software-projects',
-    description: 'Why software estimates go wrong, and how to make them less wrong.',
-  },
-  ...(byTopic.get('Project Management Principles') ?? []),
-]);
-
 // Topic order + short editorial blurbs
 const topicOrder: { name: string; blurb: string }[] = [
   {
